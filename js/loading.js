@@ -1,0 +1,1 @@
+document.onreadystatechange=function(){"complete"==document.readyState&&(document.getElementsByClassName("loading")[0].style.display="none")};
