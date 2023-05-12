@@ -12,7 +12,7 @@ import PageTwo from "../PageTwo";
 import PageThree from "../PageThree";
 import PageFour from "../PageFour";
 import PageFive from "../PageFive";
-import {  createContext, useLayoutEffect, useRef, useState } from "react";
+import { createContext, useLayoutEffect, useRef, useState } from "react";
 import classnames from "@/Utils/classnames";
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
@@ -37,7 +37,7 @@ interface menuDataProps {
   title: string;
 }
 
-export const ActiveContext = createContext<{active: number}>({
+export const ActiveContext = createContext<{ active: number }>({
   active: steps.one
 });
 
@@ -100,16 +100,16 @@ const Index = (): JSX.Element => {
     }
   ]
 
-  useLayoutEffect(()=>{
-    const handleWheel = (e: WheelEvent)=>{
-      if(!isMove.current) return;
-      const dir = e.deltaY > 0 ? 1: 0;
-      
-      if(dir){
-        if(active + 1 > steps.five)return;
+  useLayoutEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (!isMove.current) return;
+      const dir = e.deltaY > 0 ? 1 : 0;
+
+      if (dir) {
+        if (active + 1 > steps.five) return;
         setActive(active + 1);
-      }else {
-        if(active - 1 < steps.one) return;
+      } else {
+        if (active - 1 < steps.one) return;
         setActive(active - 1);
       }
       isMove.current = false;
@@ -117,20 +117,20 @@ const Index = (): JSX.Element => {
 
     document.addEventListener("wheel", handleWheel, false);
 
-    return ()=>{
-      document.removeEventListener("wheel", handleWheel, false);  
+    return () => {
+      document.removeEventListener("wheel", handleWheel, false);
     }
   }, [active])
 
-  useLayoutEffect(()=>{
+  useLayoutEffect(() => {
 
-    const handleResize = ()=>{
+    const handleResize = () => {
       setWindowHeight(window.innerHeight);
     }
 
     window.addEventListener("resize", handleResize, false);
 
-    return ()=>{
+    return () => {
       window.removeEventListener("resize", handleResize, false);
     }
   }, [])
@@ -140,35 +140,35 @@ const Index = (): JSX.Element => {
   /************* This section will include this component parameter *************/
   /* <------------------------------------ **** PARAMETER END **** ------------------------------------ */
   /* <------------------------------------ **** FUNCTION START **** ------------------------------------ */
-  const handleTransitionEnd = (e: React.TransitionEvent)=>{
-    if(e.target == containerRef.current) {
+  const handleTransitionEnd = (e: React.TransitionEvent) => {
+    if (e.target == containerRef.current) {
       isMove.current = true
     }
   }
   /************* This section will include this component general function *************/
   /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
-  return <ActiveContext.Provider value={{active}}>
+  return <ActiveContext.Provider value={{ active }}>
     <div className="index_container" >
-      <div className="index_content" onTransitionEnd={handleTransitionEnd} style={{transform: `translateY(${-(active - 1) * windowHeight}px)`, height: `${windowHeight * 5}px`}} ref={containerRef}>
-        {pageData.map(item=>{
-          return <div className="index_section" key={item.id} style={{height: `${windowHeight}px`}}>
-                    {item.component}
-                </div>
+      <div className="index_content" onTransitionEnd={handleTransitionEnd} style={{ transform: `translateY(${-(active - 1) * windowHeight}px)`, height: `${windowHeight * 5}px` }} ref={containerRef}>
+        {pageData.map(item => {
+          return <div className="index_section" key={item.id} style={{ height: `${windowHeight}px` }}>
+            {item.component}
+          </div>
         })}
       </div>
 
       <div id="index_menu">
-        <div className={classnames("index_menuBtn", {open: modalShow})} onClick={()=> setModalShow(!modalShow)}>
+        <div className={classnames("index_menuBtn", { open: modalShow })} onClick={() => setModalShow(!modalShow)}>
           <div className="index_btnTop"></div>
           <div className="index_btnCenter"></div>
           <div className="index_btnBottom"></div>
         </div>
 
-        <div className={classnames("index_modal", {show: modalShow})}>
+        <div className={classnames("index_modal", { show: modalShow })}>
           <div className="index_modalContent">
             <ul className={classnames("index_modalList", `active_${active}`)}>
-              {menuData.map(item=>{
-                return <li key={item.id} className="index_modalItem" onClick={()=> {
+              {menuData.map(item => {
+                return <li key={item.id} className="index_modalItem" onClick={() => {
                   setActive(item.id);
                   setModalShow(false);
                 }}>{item.title}</li>
@@ -180,8 +180,8 @@ const Index = (): JSX.Element => {
 
       <div className="index_nav">
         <ul className="index_navList">
-          {menuData.map(item=>{
-            return <li key={item.id} className={classnames("index_navItem", {active: active == item.id})} onClick={()=> setActive(item.id)}>
+          {menuData.map(item => {
+            return <li key={item.id} className={classnames("index_navItem", { active: active == item.id })} onClick={() => setActive(item.id)}>
               <span className="index_navInner"></span>
             </li>
           })}
