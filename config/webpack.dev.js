@@ -1,30 +1,24 @@
 const { merge } = require("webpack-merge");
-const commonConfig = require("./webpack.config");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const baseConfig = require("./webpack.config");
+const path = require("path");
 
-const devConfig = {
+const config = {
   mode: "development",
   module: {
     rules: [
       {
-        test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
-      },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        test: /\.(s[ac]|c)ss$/i,
+        use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "./public/index.html",
-    }),
-  ],
+  devtool: "eval-cheap-module-source-map",
   devServer: {
+    static: path.join(__dirname, "../public"),
+    port: "8080",
+    compress: true,
     open: true,
-    port: 8888,
   },
 };
 
-module.exports = merge(commonConfig, devConfig);
+module.exports = merge(baseConfig, config);

@@ -1,9 +1,10 @@
 import React, { Suspense } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Index from "@/Pages/Index"
 
-const Index = React.lazy(
-  () => import(/* webpackChunkName: 'homePage' */ "../Pages/Index")
-);
+// const Index = React.lazy(
+//   () => import(/* webpackChunkName: 'homePage' */ "../Pages/Index")
+// );
 
 const RootRouter = (): JSX.Element => {
   return (

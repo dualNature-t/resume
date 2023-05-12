@@ -1,5 +1,9 @@
-import ReactDom from "react-dom";
 import RootRouter from "./Route";
+import { createRoot } from "react-dom/client";
 import "./global.scss"
 
-ReactDom.render(<RootRouter />, document.getElementById("root"));
+const root = createRoot(document.getElementById("root") as Element);
+
+root.render(
+  <RootRouter></RootRouter>
+);

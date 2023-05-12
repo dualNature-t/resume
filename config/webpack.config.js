@@ -1,34 +1,16 @@
 const path = require("path");
-const webpack = require("webpack");
-const TerserPlugin = require("terser-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { ProgressPlugin } = require("webpack");
 
 module.exports = {
-  entry: {
-    index: "./src/index.tsx",
-  },
-
+  entry: "./src/index.tsx",
   output: {
-    path: path.resolve(__dirname, "../dist"),
-    filename: "[name].chunk.js",
+    filename: "js/[name].js",
+    path: path.join(__dirname, "../dist"),
+    clean: true,
   },
-
   module: {
     rules: [
-      {
-        test: /\.jsx$/,
-        use: "babel-loader",
-      },
-      {
-        test: /\.(tsx|ts)$/,
-        use: [
-          {
-            loader: "babel-loader",
-          },
-          {
-            loader: "ts-loader",
-          },
-        ],
-      },
       {
         test: /\.(jpe?g|png|gif)$/i,
         type: "asset",
@@ -41,37 +23,36 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.(ts|tsx)$/,
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env", "@babel/preset-react"],
+              cacheDirectory: true, // 添加缓存
+            },
+          },
+          "ts-loader",
+        ],
+      },
     ],
   },
-
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+    new ProgressPlugin(),
+  ],
   optimization: {
-    minimizer: [new TerserPlugin({ extractComments: false })],
     splitChunks: {
       chunks: "all",
-      // minSize: 30,
-      // cacheGroups: {
-      //   default: {
-      //     name: "common",
-      //     chunks: "initial",
-      //     minChunks: 2,
-      //     priority: -20,
-      //   },
-      //   vendors: {
-      //     test: /[\\/]node_modules[\\/]/,
-      //     name: "vendors",
-      //     chunks: "initial",
-      //     priority: -10,
-      //   },
-      // },
     },
   },
-
-  plugins: [new webpack.ProgressPlugin()],
-
   resolve: {
-    extensions: [".tsx", ".jsx", ".ts", ".js"],
     alias: {
-      "@": path.resolve(__dirname, "../src/"),
+      "@": path.join(__dirname, "../src"),
     },
+    extensions: [".tsx", ".ts", "..."],
   },
 };
