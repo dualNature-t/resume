@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, HashRouter } from "react-router-dom";
 import Index from "@/Pages/Index"
 
 // const Index = React.lazy(
@@ -9,11 +9,11 @@ import Index from "@/Pages/Index"
 const RootRouter = (): JSX.Element => {
   return (
     <Suspense fallback={<div>loading...</div>}>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Index />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </Suspense>
   );
 };
