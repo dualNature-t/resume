@@ -1,0 +1,73 @@
+.pageOne_container {
+	height: 100%;
+	background: rgba(86, 83, 100, .7);
+
+	&.active {
+		.pageOne_content {
+			animation: identifier 1.5s 0.7s;
+		}
+	}
+}
+
+.pageOne_content {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -360px;
+	margin-top: -150px;
+	width: 720px;
+	height: 300px;
+	border-radius: 20px;
+	transition: all .5s;
+}
+
+@keyframes identifier {
+	0% {
+
+	};
+	33% {
+		background: rgba(255,255,255,.3);
+		box-shadow: 0 0 50px rgba(0,0,0,.5);
+		transform: translate(-34px, -1.3px) rotateX(-6.9deg);
+	};
+	66%{
+		background: rgba(255,255,255,.3);
+		box-shadow: 0 0 50px rgba(0,0,0,.5);
+		transform: translate(34px, -1.3px) rotateX(6.9deg);
+	};
+	100% {
+		// background: rgba(255,255,255,.3);
+		// box-shadow: 0 0 50px rgba(0,0,0,.5);
+		// transform: translate(34px, -1.3px) rotateX(6.9deg);
+	}
+}
+
+.pageOne_name__en {
+    color: #000;
+	font-size: 60px;
+	text-align: center;
+	font-family: FangSong;
+}
+
+.pageOne_desc__en {
+    color: #000;
+	font-size: 32px;
+	text-align: center;
+    margin-top: 10px;
+}
+
+.pageOne_name {
+    margin-top: 30px;
+	color: #000;
+	font-size: 22px;
+	text-align: center;
+	font-family: KaiTi;
+}
+
+.pageOne_desc {
+    color: #000;
+	font-size: 22px;
+	text-align: center;
+	font-family: KaiTi;
+    margin-top: 10px;
+}
